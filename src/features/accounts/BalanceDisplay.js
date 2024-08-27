@@ -1,3 +1,5 @@
+import { connect } from "react-redux";
+
 function formatCurrency(value) {
   return new Intl.NumberFormat("en", {
     style: "currency",
@@ -5,8 +7,16 @@ function formatCurrency(value) {
   }).format(value);
 }
 
-function BalanceDisplay() {
-  return <div className="balance">{formatCurrency(123456)}</div>;
+function BalanceDisplay({ balance }) {
+  // const balance = useSelector((state) => state.account.balance);
+  return <div className="balance">{formatCurrency(balance)}</div>;
 }
 
-export default BalanceDisplay;
+// before hooks were introduced.0
+function mapStateToProps(store) {
+  return {
+    balance: store.account.balance,
+  };
+}
+
+export default connect(mapStateToProps)(BalanceDisplay);
